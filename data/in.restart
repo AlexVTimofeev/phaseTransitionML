@@ -1,0 +1,58 @@
+read_restart restart.${pressure}.file
+
+variable rho       equal 1.2 
+variable side      equal 5.45
+
+lattice     fcc ${rho}
+region      boxid block 0.0 ${side} 0.0 ${side} 0.0 ${side}
+
+pair_style  lj/cut 2.5
+pair_coeff  1 1 1.0 1.0 2.5
+pair_modify tail yes
+neighbor    0.3 bin
+
+thermo_style custom step pe ke etotal temp press density
+thermo 100
+# normalize thermo properties by number of atoms (yes or no)
+thermo_modify norm no
+
+#  specify ensemble
+#   save configurations
+#   dumpid = 1
+#   all atoms
+#   atomic symbol is Ar
+#   save positions every 100 steps
+#   filename = output.xyz
+#
+dump    1       all xyz 100 output.xyz
+dump_modify 1 element Ar
+log log.temp${temperature}.press${pressure}.file
+#  define time step
+reset_timestep 0
+timestep 0.005
+
+fix 1 all npt temp 0.5 0.5 0.1 iso ${pressure} ${pressure} 0.2 
+
+run 10000
+
+unfix 1
+
+fix 2 all npt temp 0.5 ${temperature} 0.1 iso ${pressure} ${pressure} 0.2
+
+run 10000
+
+unfix 2
+
+fix 3 all npt temp ${temperature} ${temperature} 0.1 iso ${pressure} ${pressure} 0.2
+run 5000
+compute 1 all rdf 100
+fix 1 all ave/time 1000 2 30000 c_1[*] file temp${temperature}.press${pressure}.rdf mode vector
+compute 2 all msd
+compute 3 all msd average yes
+
+thermo_style custom step pe ke etotal temp press density c_2[4] c_3[4]
+thermo 100
+# normalize thermo properties by number of atoms (yes or no)
+thermo_modify norm no
+
+run 5000

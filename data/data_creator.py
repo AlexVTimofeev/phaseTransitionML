@@ -23,10 +23,10 @@ def range_log(start = 10**-5,finish = 100,step=10):
 def main():
     #os.system('lmp_serial < in.lennardjonesfluid')
     
-    for T in np.arange(min_T,max_T,step_T):
-        for p in range_log(min_p,max_p,2):
-            os.system('lmp_serial < in.lennardjonescrystal -var pressure {:.1f}'.format(p))
-            os.system('lmp_serial < in.restart -var temperature {:.1f} -var pressure {:.1f}'.format(T,p))   
+    for p in range_log(min_p,max_p,2):
+        os.system('lmp_serial < in.lennardjonescrystal -var pressure {:.1f}'.format(p))
+        for T in np.arange(min_T,max_T,step_T):
+                os.system('lmp_serial < in.restart -var temperature {:.1f} -var pressure {:.1f}'.format(T,p))
 
 if __name__ == '__main__':
     main()
