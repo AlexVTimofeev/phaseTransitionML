@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import re
 
-processedDataPath = ''
-unprocessedDataPath = ''
+processedDataPath = 'processedData/'
+unprocessedDataPath = 'data/'
 
 def read_line_special(file_object):
     while True:
