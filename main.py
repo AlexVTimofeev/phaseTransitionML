@@ -8,7 +8,7 @@ import dataCreator
 
 def main():
 
-    dataCreator.main()
+    dataCreator.main() # Поменять папку сохранения файлов
     dataPreProcessing.main()
     dataProcessing.main()
 
