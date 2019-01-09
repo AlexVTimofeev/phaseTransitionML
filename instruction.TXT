@@ -1,3 +1,5 @@
 #1 В файлу data/data_creator.py выбиваем разбиение сетки [+]
 #2 Запускаем data/data_creator.py [+]
 #3 Запускаем dataPreprocessing.py [+]
+#4 Запускаем dataProcessing.py [+]
+#5 В ноутбуке Clustering можно попробовать кластеризовать полученные точки [+]

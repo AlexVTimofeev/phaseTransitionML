@@ -2,14 +2,18 @@ import glob # Go throw all files in directory
 import re
 import pandas as pd
 
-processedDataPath = 'processedData/'
-outpitFile = 'data.csv'
+import parametrs
+
+#processedDataPath = 'processedData/'
+#outpitFile = 'data.csv'
 
 def main():
     rows = ['c{}'.format(i) for i in range(65)]
     df = pd.DataFrame(columns=rows)
     
-    for logFile, rdfFile in zip(glob.glob(processedDataPath + 'log.*temp*.csv'),glob.glob(processedDataPath + '*.rdf')): 
+    for logFile, rdfFile in zip(
+        glob.glob(parametrs.processedDataPath + 'log.*temp*.csv'),
+        glob.glob(parametrs.processedDataPath + '*.rdf')): 
         # Немного веры не помешает
         temp = re.search(r'.*emp(.+)\.press',rdfFile).group(1)
         press = re.search(r'press(.+)\.rdf',rdfFile).group(1)
@@ -25,7 +29,7 @@ def main():
             data += list(df_rfd.iloc[i])
         df.loc[len(df)] = data
     
-    df.to_csv(outpitFile)
+    df.to_csv(parametrs.outpitFile)
 
 if __name__ == "__main__":
     main()

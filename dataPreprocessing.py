@@ -4,8 +4,10 @@ import numpy as np
 import pandas as pd
 import re
 
-processedDataPath = 'processedData/'
-unprocessedDataPath = 'data/'
+import parametrs 
+
+#processedDataPath = 'processedData/'
+#unprocessedDataPath = 'data/'
 
 def read_line_special(file_object):
     while True:
@@ -26,7 +28,7 @@ def parser(line):
         return None
 
 def writeCSV(path):
-    auxiliary_file = processedDataPath + path[4:-5] + '.csv'
+    auxiliary_file = parametrs.processedDataPath + path[4:-5] + '.csv'
     help_file = open(auxiliary_file,'w') # костыль - не могу сразу передавать в DataFrame str. Использовать split и int?
     help_file.write('Step PotEng KinEng TotEng Temp Press Density c_2[4] c_3[4]\n')
     with open(path,'r') as file:
@@ -40,12 +42,12 @@ def writeCSV(path):
 
 def main():
 
-    for logFile in glob.glob(unprocessedDataPath + 'log.*'):
+    for logFile in glob.glob(parametrs.unprocessedDataPath + 'log.*'):
         writeCSV(logFile)
 
-    if unprocessedDataPath != processedDataPath:
-        for rdfFile in glob.glob(unprocessedDataPath + '*.rdf'):
-            newRdfPath = processedDataPath + rdfFile[len(unprocessedDataPath):]
+    if parametrs.unprocessedDataPath != parametrs.processedDataPath:
+        for rdfFile in glob.glob(parametrs.unprocessedDataPath + '*.rdf'):
+            newRdfPath = parametrs.processedDataPath + rdfFile[len(parametrs.unprocessedDataPath):]
             copy2(rdfFile, newRdfPath)
 
 if __name__ == "__main__":
