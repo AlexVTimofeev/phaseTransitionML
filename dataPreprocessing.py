@@ -6,9 +6,6 @@ import re
 
 import parametrs 
 
-#processedDataPath = 'processedData/'
-#unprocessedDataPath = 'data/'
-
 def read_line_special(file_object):
     while True:
         data = file_object.readline()

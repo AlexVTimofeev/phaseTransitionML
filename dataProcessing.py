@@ -4,9 +4,6 @@ import pandas as pd
 
 import parametrs
 
-#processedDataPath = 'processedData/'
-#outpitFile = 'data.csv'
-
 def main():
     rows = ['c{}'.format(i) for i in range(65)]
     df = pd.DataFrame(columns=rows)
