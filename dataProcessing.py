@@ -11,10 +11,10 @@ def main():
     for logFile, rdfFile in zip(
         glob.glob(parametrs.processedDataPath + 'log.*temp*.csv'),
         glob.glob(parametrs.processedDataPath + '*.rdf')): 
-        # Немного веры не помешает
+        # Берем температуру и давление из названия файлов
         temp = re.search(r'.*emp(.+)\.press',rdfFile).group(1)
         press = re.search(r'press(.+)\.rdf',rdfFile).group(1)
-    
+
         df_t = pd.read_csv(logFile,delimiter=' ',index_col='Step')
         df_t = df_t.drop(columns=['Temp','Press'])
         df_rfd = pd.read_table(rdfFile,skiprows=[0,1,2,3,4], delimiter=' ',names=['Row','c_1[1]','c_1[2]','c_1[3]'],index_col='Row')
