@@ -4,6 +4,8 @@ import pandas as pd
 
 import parametrs
 
+startCount = 255
+
 def main():
     rows = ['c{}'.format(i) for i in range(65)]
     df = pd.DataFrame(columns=rows)
@@ -18,7 +20,11 @@ def main():
         df_t = pd.read_csv(logFile,delimiter=' ',index_col='Step')
         df_t = df_t.drop(columns=['Temp','Press'])
         df_rfd = pd.read_table(rdfFile,skiprows=[0,1,2,3,4], delimiter=' ',names=['Row','c_1[1]','c_1[2]','c_1[3]'],index_col='Row')
-    
+        # ???
+
+        df_t = df_t[startCount:].describe()
+        df_rfd = df_rfd.describe()
+
         data = [temp,press]
         for i in range(1,8):
             data += list(df_t.iloc[i])   
