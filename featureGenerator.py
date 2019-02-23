@@ -13,7 +13,7 @@ startCount = 255
 
 
 def main():
-    rows = ['c{}'.format(i) for i in range(9)] # 11, если добавлять положение равновесия
+    rows = ['c{}'.format(i) for i in range(13)] # 11, если добавлять положение равновесия
     df = pd.DataFrame(columns=rows)
     
     for logFile, rdfFile in zip(
@@ -31,7 +31,13 @@ def main():
 
         data = [temp,press]
         # data += [df_rfd.max()/df_rfd.min()]
-        data += [df_rfd.max()/df_rfd[df_rfd.argmax():].argmin()]
+        data += [
+            df_rfd.max()/df_rfd[df_rfd.argmax():].min(),
+            df_rfd.max(),
+            df_rfd.argmax(),
+            df_rfd[df_rfd.argmax():].min(),
+            df_rfd[df_rfd.argmax():].argmin()
+            ]
        
         for energy in ['PotEng','KinEng','TotEng']:
             data += [df_t[energy][startCount:].mean(),df_t[energy][startCount:].std()]
